@@ -1,0 +1,43 @@
+// Input stack elements - any two rock-paper-scissors items. Ex:
+<'rock'>
+<'scissors'>
+
+// Rock paper scissors script - result for player 1
+OP_2DUP
+<"rock">
+OP_EQUAL
+OP_IF
+    <"paper">
+    OP_EQUAL
+    OP_IF
+        OP_DROP
+        OP_DROP
+        OP_1
+    OP_ENDIF
+OP_ELSE
+    OP_OVER
+    <"paper">
+    OP_EQUAL
+    OP_IF
+        <"scissors">
+        OP_EQUAL
+        OP_IF
+            OP_DROP
+            OP_DROP
+            OP_1
+        OP_ENDIF
+    OP_ELSE
+        OP_OVER
+        <"scissors">
+        OP_EQUAL
+        OP_IF
+            <"rock">
+            OP_EQUAL
+            OP_IF
+                OP_DROP
+                OP_DROP
+                OP_1
+            OP_ENDIF
+        OP_ENDIF
+    OP_ENDIF
+OP_ENDIF
