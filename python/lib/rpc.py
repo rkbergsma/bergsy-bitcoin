@@ -1,6 +1,7 @@
 import json, requests, uuid
 from .hash   import hash160
 from .helper import decode_address
+from .encoder import encode_tx
 
 class RpcSocket:
     ''' Basic implementation of a JSON-RPC interface. '''
@@ -13,7 +14,6 @@ class RpcSocket:
         self.username = opt.get('username', 'bitcoin')
         self.password = opt.get('password', 'password')
         self.wallet   = opt.get('wallet', None)
-        print("WALLET IS SET TO:", self.wallet)
         self.initFlag = False
 
     def init(self):
@@ -130,3 +130,7 @@ class RpcSocket:
             'pubkey_hash': pubkey_hash,
             'redeem_script': f'1976a914{pubkey_hash}88ac',
         }
+
+    def send_transaction(self, transaction):
+        encoded_tx = encode_tx(transaction)
+        self.call('sendrawtransaction', encoded_tx)

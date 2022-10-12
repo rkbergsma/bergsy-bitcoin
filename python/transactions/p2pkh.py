@@ -17,7 +17,8 @@ to the blockchain (if you are using regtest).
 
 import os, sys
 
-sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
+# sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
+sys.path.insert(1, os.path.abspath(".."))
 
 from lib.encoder import encode_tx
 from lib.helper  import decode_address
@@ -26,7 +27,7 @@ from lib.sign    import sign_tx
 from lib.rpc     import RpcSocket
 
 ## Setup our RPC socket.
-rpc = RpcSocket({ 'wallet': 'regtest' })
+rpc = RpcSocket({ 'wallet': 'bergs-wallet' })
 assert rpc.check()
 
 ## Get a utxo for Alice.
@@ -111,3 +112,5 @@ print(f'''
 -- Hex --
 {encode_tx(atob_tx)}
 ''')
+
+rpc.send_transaction(atob_tx)
