@@ -30,6 +30,10 @@ from lib.rpc     import RpcSocket
 rpc = RpcSocket({ 'wallet': 'bergs-wallet' })
 assert rpc.check()
 
+## Setup our RPC socket.
+bob_rpc = RpcSocket({ 'wallet': 'bob_wallet' })
+assert bob_rpc.check()
+
 ## Get a utxo for Alice.
 alice_utxo = rpc.get_utxo(0)
 
@@ -38,7 +42,7 @@ alice_change_txout = rpc.get_recv(fmt='base58')
 alice_pubkey_hash  = decode_address(alice_change_txout['address'])
 
 ## Get a payment address for Bob.
-bob_payment_txout = rpc.get_recv(fmt='base58')
+bob_payment_txout = bob_rpc.get_recv(fmt='base58')
 bob_pubkey_hash   = decode_address(bob_payment_txout['address'])
 
 ## Calculate our output amounts.
