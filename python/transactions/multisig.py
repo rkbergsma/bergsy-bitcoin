@@ -131,7 +131,15 @@ redeem_tx = {
     'locktime':0
 }
 
-redeem_sig = sign_tx(
+redeem_sig_1 = sign_tx(
+  redeem_tx,
+  0,
+  locking_tx_value,
+  redeem_script,
+  party1_recv['priv_key']
+)
+
+redeem_sig_2 = sign_tx(
   redeem_tx,
   0,
   locking_tx_value,
@@ -139,6 +147,14 @@ redeem_sig = sign_tx(
   party2_recv['priv_key']
 )
 
-redeem_tx['vin'][0]['witness'] = [ redeem_sig, party1_recv['pub_key'], party2_recv['pub_key'], redeem_script ]
+redeem_sig_3 = sign_tx(
+  redeem_tx,
+  0,
+  locking_tx_value,
+  redeem_script,
+  party3_recv['priv_key']
+)
+
+redeem_tx['vin'][0]['witness'] = [ 0, redeem_sig_1, redeem_sig_2, redeem_sig_3, redeem_script ]
 
 print(f'Unlocking Tx:\n{encode_tx(redeem_tx)}')
