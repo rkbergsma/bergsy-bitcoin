@@ -155,6 +155,8 @@ redeem_sig_3 = sign_tx(
   party3_recv['priv_key']
 )
 
-redeem_tx['vin'][0]['witness'] = [ 0, redeem_sig_1, redeem_sig_2, redeem_sig_3, redeem_script ]
+#redeem_tx['vin'][0]['witness'] = [ 0, redeem_sig_1, redeem_sig_2, redeem_sig_3, redeem_script ]
+#redeem_tx['vin'][0]['witness'] = [ redeem_script, redeem_sig_3, redeem_sig_2, redeem_sig_1, 'OP_0' ]
+redeem_tx['vin'][0]['witness'] = [ 0, redeem_sig_1, redeem_sig_2, redeem_script ]
 
 print(f'Unlocking Tx:\n{encode_tx(redeem_tx)}')

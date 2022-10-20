@@ -85,12 +85,12 @@ class RpcSocket:
         if self.isWalletLoaded():
             return True
         if not self.isWalletExists():
-            raise f'Wallet "{self.wallet}" does not exist!'
+            raise Exception(f'Wallet "{self.wallet}" does not exist!')
 
         result = self.call('loadwallet', [ self.wallet ])
 
         if result['warning'] or result['name'] != self.wallet:
-            raise 'Wallet failed to load cleanly: {}'.format(result['warning'])
+            raise Exception('Wallet failed to load cleanly: {}'.format(result['warning']))
         
         return True
 
