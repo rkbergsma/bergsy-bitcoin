@@ -6,8 +6,8 @@ from .encoder import encode_tx
 class RpcSocket:
     ''' Basic implementation of a JSON-RPC interface. '''
     def __init__(self, opt):
-        # url  = opt.get('url', '127.0.0.1')
-        url  = opt.get('url', '192.168.1.226')  # hack for running in WSL with bitcoin-Qt running in windows: use Windows IPv4 address
+        url  = opt.get('url', '127.0.0.1')
+        # url  = opt.get('url', '192.168.1.226')  # hack for running in WSL with bitcoin-Qt running in windows: use Windows IPv4 address
         port = opt.get('port', 18443)
 
         self.fullUrl  = f'http://{url}:{port}/'

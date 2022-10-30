@@ -15,7 +15,7 @@ from lib.rpc      import RpcSocket
 ## Setup our RPC socket.
 fee = 1000
 # rpc = RpcSocket({ 'wallet': 'regtest' })
-rpc = RpcSocket({ 'wallet': 'Legacy' })
+rpc = RpcSocket({ 'wallet': 'bergs-wallet' })
 assert rpc.check()
 
 ## Get utxo data for each of our participants.
