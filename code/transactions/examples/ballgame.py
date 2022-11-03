@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import json, os, sys
 
-# sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
-sys.path.insert(1, os.path.abspath(".."))
+sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
+#sys.path.insert(1, os.path.abspath("../../"))
 
 from copy import deepcopy
 

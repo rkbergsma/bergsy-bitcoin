@@ -121,7 +121,7 @@ class RpcSocket:
             else:
                 address = self.call('getnewaddress')
         encoded_key = self.call('dumpprivkey', address)
-        public_key  = self.call('getaddressinfo', address)['pubkey']
+        public_key  = self.call('getaddressinfo', address)['pubkey'] 
         pubkey_hash = hash160(public_key).hex()
         return {
             'address': address,

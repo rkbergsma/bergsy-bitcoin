@@ -5,8 +5,8 @@
 
 import os, sys
 
-# sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
-sys.path.insert(1, os.path.abspath(".."))
+sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
+#sys.path.insert(1, os.path.abspath(".."))
 
 from lib.encoder import encode_tx, encode_script
 from lib.hash    import hash160, hash256, sha256

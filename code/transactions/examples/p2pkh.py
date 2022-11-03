@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
 
 """
-Example of a Pay-to-Witness-Pubkey-Hash (P2WPKH) transaction.
+Example of a Pay-to-Pubkey-Hash (P2PKH) transaction.
+
+P2PKH is the most common type of transaction that is used 
+on the Bitcoin payment network.
+
+We will construct a transaction that is locked to the hash
+of a public key. In order to unlock the tranasction, a user
+will have to provide the un-hashed public key, along with a
+digital signature which shares that same public key.
+
+You can generate a block in order to commit this transaction 
+to the blockchain (if you are using regtest).
 """
 
 import os, sys
 
-# sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
-sys.path.insert(1, os.path.abspath(".."))
+sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
+#sys.path.insert(1, os.path.abspath(".."))
 
-from lib.encoder import encode_tx, encode_script
+from lib.encoder import encode_tx
+from lib.helper  import decode_address
 from lib.hash    import hash256
-from lib.helper  import decode_address, hash_script, get_txid
 from lib.sign    import sign_tx
 from lib.rpc     import RpcSocket
 
@@ -19,25 +30,25 @@ from lib.rpc     import RpcSocket
 rpc = RpcSocket({ 'wallet': 'bergs-wallet' })
 assert rpc.check()
 
-## First, we will lookup an existing utxo,
-## and use that to fund our transaction.
+## Setup our RPC socket.
+bob_rpc = RpcSocket({ 'wallet': 'bob_wallet' })
+assert bob_rpc.check()
+
+## Get a utxo for Alice.
 alice_utxo = rpc.get_utxo(0)
 
 ## Get a change address for Alice.
-alice_change_txout     = rpc.get_recv()
-_, alice_redeem_script = decode_address(alice_change_txout['address'])
+alice_change_txout = rpc.get_recv(fmt='base58')
+alice_pubkey_hash  = decode_address(alice_change_txout['address'])
 
 ## Get a payment address for Bob.
-bob_payment_txout    = rpc.get_recv()
-_, bob_redeem_script = decode_address(bob_payment_txout['address'])
+bob_payment_txout = bob_rpc.get_recv(fmt='base58')
+bob_pubkey_hash   = decode_address(bob_payment_txout['address'])
 
 ## Calculate our output amounts.
 fee = 1000
 bob_recv_value = alice_utxo['value'] // 2
 alice_change_value = alice_utxo['value'] // 2 - fee
-
-## The initial spending transaction. This tx spends a previous utxo,
-## and commits the funds to our P2WPKH transaction.
 
 ## The spending transaction.
 atob_tx = {
@@ -52,11 +63,11 @@ atob_tx = {
     'vout': [
         {
             'value': bob_recv_value,
-            'script_pubkey': [0, bob_redeem_script]
+            'script_pubkey': ['OP_DUP', 'OP_HASH160', bob_pubkey_hash, 'OP_EQUALVERIFY', 'OP_CHECKSIG']
         },
         {
             'value': alice_change_value,
-            'script_pubkey': [0, alice_redeem_script]
+            'script_pubkey': ['OP_DUP', 'OP_HASH160', alice_pubkey_hash, 'OP_EQUALVERIFY', 'OP_CHECKSIG']
         }
     ],
     'locktime': 0
@@ -82,7 +93,7 @@ alice_signature = sign_tx(
 atob_tx['vin'][0]['witness'] = [ alice_signature, alice_utxo['pub_key'] ]
 
 print(f'''
-## Pay-to-Witness-Pubkey-Hash Example ##
+## Pay-to-Pubkey-Hash Example ##
 
 -- Transaction Id --
 {atob_txid}
@@ -105,3 +116,5 @@ print(f'''
 -- Hex --
 {encode_tx(atob_tx)}
 ''')
+
+rpc.send_transaction(atob_tx)
