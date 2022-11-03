@@ -112,9 +112,9 @@ generatetoaddress 1 bcrt1qs3pclhlxwn2m25arahdw72wldgd90zqk3gjqks
 ]
 ```
 
-And finally the screeshots showing bergs-wallet and bob-wallet and the 1BTC transaction:
-![alt text](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/bergs_wallet_p2pkh.png)  
-![alt text](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/bob_wallet_p2pkh.png)  
+And finally the screeshots showing bergs-wallet and bob-wallet and the 1BTC transaction:  
+![Bergs Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/bergs_wallet_p2pkh.png)   
+![Bob Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/bob_wallet_p2pkh.png)   
 
 
 Link to testnet transaction.
