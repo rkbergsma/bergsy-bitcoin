@@ -1,16 +1,14 @@
 # bergsy-bitcoin
 Repository for EE382V Blockchain and Smart Contracts
 
-## AirBNB Bitcoin
-1. Unique property/host ID
-2. Calendar shows availability - queries blockchain for info
-3. Uses unique identifier + user's wallet to generate transaction for given dates
-4. 2 of 2 multisig with renter and property owner and timelock? OP_RETURN?
+## Assignments
+Assignments are described under the `assignments` folder. The assignment will contain the description of the assignment, as well as the code (or a link to the code) that completes each assignment. There are 3 assignments:
+1. Bitcoin Transaction
+2. Bitcoin Script
+3. Lightning Payment
 
-Options:
-1. Renter connects wallet, sends funds to host/owner, output(s) are in a timelock contract until booked date. OP_RETURN holds date range.
-    - Host enters their address into tool first time to create host account. Then add photos of property associated with account.
-    - Somehow hide notes/key/passcode behind a transaction back to the renter. Would be timelocked to day of renting. Colored coin? Other return using renter's pubkey? --> Could just have it be a transaction with OP_RETURN as long as BTC address isn't linked to physical home address.
-    - How to handle cancelations? Smart contract with 2 of 3 to return funds if requested?
-    - Static wallet address for host/home?
-2. Renter sends relative timelock transaction to start date of stay. Output timelock at end of stay.
+## Code
+Most of the code is written in Python and lives under the `code` folder. This allows libraries to be utilized multiple times across different assignments and projects.
+
+## Project(s)
+Any projects will be separate folders under the `code` folder. Currently there are 2 projects that are both a work in progress: `app` and `escrow`. The project under `app` is a Flask app with a goal of becoming a Bitcoin enabled version of AirBNB. The project under `escrow` is a project that is trying to show off the abilities of escrow through Bitcoin. Both of these are a work in progress.
