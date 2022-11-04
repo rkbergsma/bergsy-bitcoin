@@ -6,102 +6,117 @@ Example of a Pay-to-Witness-Pubkey-Hash (P2WPKH) transaction.
 
 import os, sys
 
-sys.path.append(os.path.dirname(__file__).split('/transactions')[0])
-#sys.path.insert(1, os.path.abspath(".."))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+sys.path.append(os.path.dirname(SCRIPT_DIR + "../lib."))
 
 from lib.encoder import encode_tx, encode_script
 from lib.hash    import hash256
 from lib.helper  import decode_address, hash_script, get_txid
 from lib.sign    import sign_tx
 from lib.rpc     import RpcSocket
+from lib.helper  import get_utxos, get_fee, get_amount
 
-## Setup our RPC socket.
-rpc = RpcSocket({ 'wallet': 'bergs-wallet' })
+# Init wallet:
+wallet = input("Enter wallet name: ")
+rpc = RpcSocket({ 'wallet': wallet })
 assert rpc.check()
 
-## First, we will lookup an existing utxo,
-## and use that to fund our transaction.
-alice_utxo = rpc.get_utxo(0)
+# Get amount
+amount = get_amount()
 
-## Get a change address for Alice.
-alice_change_txout     = rpc.get_recv()
-_, alice_redeem_script = decode_address(alice_change_txout['address'])
+# Get fee
+fee = get_fee()
 
-## Get a payment address for Bob.
-bob_payment_txout    = rpc.get_recv()
-_, bob_redeem_script = decode_address(bob_payment_txout['address'])
+# Get utxos for input to meet amount
+utxos = get_utxos(rpc, amount + fee)
 
-## Calculate our output amounts.
-fee = 1000
-bob_recv_value = alice_utxo['value'] // 2
-alice_change_value = alice_utxo['value'] // 2 - fee
+## Get a change address - using segwit address.
+change_txout     = rpc.get_recv()
+_, change_redeem_script = decode_address(change_txout['address'])
+
+# Get payment address
+receiver_type = None
+receiver_address = None
+while receiver_type != "a" and receiver_type != "w":
+    receiver_type = input("Select one of the following options:\n(a) Enter recipient address\n(w) Enter recipient wallet name in bitcoin core:\n")
+if receiver_type == "a":
+    rec_address = input("Enter recipient payment segwit address: ")
+    if not rec_address.startswith('tb') and not rec_address.startswith('bc'):
+        raise Exception("Only segwit addresses supported")
+    receiver_address = {'address': rec_address}
+elif receiver_type == "w":
+    receiver_wallet = input("Enter recipient wallet name: ")
+    receiver_rpc = RpcSocket({ 'wallet': receiver_wallet })
+    assert receiver_rpc.check()
+    receiver_address = receiver_rpc.get_recv()
+
+_, receiver_redeem_script = decode_address(receiver_address['address'])
+
+# Set the amount to send and change value
+utxos_sum = sum(u['value'] for u in utxos)
+change_value = utxos_sum - amount - fee
 
 ## The initial spending transaction. This tx spends a previous utxo,
 ## and commits the funds to our P2WPKH transaction.
 
+# Add all utxos as vin:
+all_vins = []
+for u in utxos:
+    vin = {}
+    vin['txid'] = u['txid']
+    vin['vout'] = u['vout']
+    vin['script_sig'] = []
+    vin['sequence'] = 0xFFFFFFFF
+    all_vins.append(vin)
+
 ## The spending transaction.
-atob_tx = {
+tx = {
     'version': 1,
-    'vin': [{
-        # We are unlocking the utxo from Alice.
-        'txid': alice_utxo['txid'],
-        'vout': alice_utxo['vout'],
-        'script_sig': [],
-        'sequence': 0xFFFFFFFF
-    }],
+    'vin': all_vins,
     'vout': [
         {
-            'value': bob_recv_value,
-            'script_pubkey': [0, bob_redeem_script]
+            'value': amount,
+            'script_pubkey': [0, receiver_redeem_script]
         },
         {
-            'value': alice_change_value,
-            'script_pubkey': [0, alice_redeem_script]
+            'value': change_value,
+            'script_pubkey': [0, change_redeem_script]
         }
     ],
     'locktime': 0
 }
 
 ## Serialize the transaction and calculate the TXID.
-atob_hex  = encode_tx(atob_tx)
-atob_txid = hash256(bytes.fromhex(atob_hex))[::-1].hex()
+tx_hex  = encode_tx(tx)
+txid = hash256(bytes.fromhex(tx_hex))[::-1].hex()
 
-## The redeem script is a basic Pay-to-Pubkey-Hash template.
-redeem_script = f"76a914{alice_utxo['pubkey_hash']}88ac"
+# Sign all inputs:
+for index, utxo in enumerate(utxos):
+    ## The redeem script is a basic Pay-to-Pubkey-Hash template.
+    redeem_script = f"76a914{utxo['pubkey_hash']}88ac"
 
-## We are signing Alice's UTXO using BIP143 standard.
-alice_signature = sign_tx(
-    atob_tx,                # The transaction.
-    0,                      # The input being signed.
-    alice_utxo['value'],    # The value of the utxo being spent.
-    redeem_script,          # The redeem script to unlock the utxo. 
-    alice_utxo['priv_key']  # The private key to the utxo pubkey hash.
-)
+    ## We are signing Alice's UTXO using BIP143 standard.
+    signature = sign_tx(
+        tx,                # The transaction.
+        index,                      # The input being signed.
+        utxo['value'],    # The value of the utxo being spent.
+        redeem_script,          # The redeem script to unlock the utxo. 
+        utxo['priv_key']  # The private key to the utxo pubkey hash.
+    )
 
-## Include the arguments needed to unlock the redeem script.
-atob_tx['vin'][0]['witness'] = [ alice_signature, alice_utxo['pub_key'] ]
+    ## Include the arguments needed to unlock the redeem script.
+    tx['vin'][index]['witness'] = [ signature, utxo['pub_key'] ]
 
 print(f'''
 ## Pay-to-Witness-Pubkey-Hash Example ##
 
 -- Transaction Id --
-{atob_txid}
+{txid}
 
--- Alice UTXO --
-     Txid : {alice_utxo['txid']}
-     Vout : {alice_utxo['vout']}
-    Value : {alice_utxo['value']}
-     Hash : {alice_utxo['pubkey_hash']}
-
--- Sending to Bob --
-  Address : {bob_payment_txout['address']}
-    Coins : {bob_recv_value}
-
--- Change --
-  Address : {alice_change_txout['address']}
-      Fee : {fee}
-    Coins : {alice_change_value}
-
--- Hex --
-{encode_tx(atob_tx)}
+-- Transaction Hex --
+{encode_tx(tx)}
 ''')
+
+#print("Would send transaction here")
+rpc.send_transaction(tx)
