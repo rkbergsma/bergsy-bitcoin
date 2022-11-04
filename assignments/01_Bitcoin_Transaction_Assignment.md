@@ -146,9 +146,61 @@ Regtest output here.
 Link to testnet transaction.
 
 ## Pay-to-Witness Script Hash (p2wsh)
-Regtest output here.
+Output from testing on regtest (note the script automatically sends the transaction via JSON RPC call):  
+```
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./p2wsh_final.py 
+Enter wallet name: bergs-wallet
+Enter amount to send (in satoshis): 1000000000
+Enter fee in satoshis (or press enter for default 500): 
+Using default fee of 500
+Enter your secret: sup3rS3cr3t
 
-Link to testnet transaction.
+# Pay-to-Witness-Script-Hash Example
+
+Locking Txid:
+8ab3dae6ad29483024c114c2a2f1ed26ee0e0bda46374e93a65844f4711d35f3
+
+Redeem Script:
+a914d8a126c4cf5b76ace0966a7ace2f033976880efc8876a914a3785e0a1552225cd770ae9dd941c8f0f4f3496988ac
+
+Locking Tx:
+010000000001010499f91d2d18582c32d246cb2ba0376149e3605b59062f7110b9ac516771c1c10000000000ffffffff0200ca9a3b0000000022002070e92302f26940554341396a5f5659d50f6c28397d0c1e1e0bfdf75423b5883f0c266bee000000001976a9141a7faeb7bc1e3fcb7af7dd26af9973879b20083d88ac0247304402200beb0046fc0d92a5bd86ce644243c6e3f288f85c92ba150465e7f5a8e2aeaf4a0220018806322bb4bddd096e2322addbe60d53842e1f593262b4140ca4b147fca858012102f8ef2d77f50645b896eb199f3809b22cbfda1032229b8975b3e41e9544be9ae600000000
+
+Unlocking Tx:
+01000000000101f3351d71f44458a6934e3746da0b0eee26edf1a2c214c124304829ade6dab38a0000000000ffffffff010cc89a3b00000000160014a3785e0a1552225cd770ae9dd941c8f0f4f3496904473044022067a0d24a4a7f12b07a06a0a0ac85854262e7b571b91f96a3cfa1803bbb2e07ed02205f00be53c496633310f4ab90cdac1e060202dfb7bf931785884d6e0d0ba3c77501210366c3263443b490702393532bed9e5cd3e1ad0a75710b53b4bd494bba4a670d550b737570337253336372337430a914d8a126c4cf5b76ace0966a7ace2f033976880efc8876a914a3785e0a1552225cd770ae9dd941c8f0f4f3496988ac00000000
+```
+
+And finally the screeshots showing bergs-wallet and bob-wallet and the 1BTC transaction:  
+![Bergs Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/p2wsh_bergs_wallet.png)   
+
+Testnet:  
+[Funding Testnet Transaction Link](https://mempool.space/testnet/tx/69e656fc6f827accf1d1ade12830ea1242fefaf3999d4081ab72e3d19ff7edd1)  
+[Redeeming Testnet Transaction Link](https://mempool.space/testnet/tx/9858f8c4c0f0bef60a26e36c3865bb8ccc06ecdf5d03187062d04b438ee050f6)  
+Console Output:   
+```
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./p2wsh_final.py 
+Enter wallet name: bergs-testnet
+Enter amount to send (in satoshis): 2000
+Enter fee in satoshis (or press enter for default 500): 
+Using default fee of 500
+Enter your secret: testS3cret
+SCRIPT HERE: 44c46b2643ca8cd7c6983d12f5185a1e6d544c6a
+
+# Pay-to-Witness-Script-Hash Example
+
+Locking Txid:
+69e656fc6f827accf1d1ade12830ea1242fefaf3999d4081ab72e3d19ff7edd1
+
+Redeem Script:
+a914dd62e2a7610e7e2143065c198a1fefe6596d992c8876a914a1c9e52a87c3b6e8f0bd3f734da9d42c7af3585188ac
+
+Locking Tx:
+01000000000101502865ba0b8e9d569e331d7c159742f6ea561c1e71be94f92398b982cec2896a0000000000ffffffff02d007000000000000220020328911ea8702fcc9092198fb5b5367ca6e8a7a6b207bf7557d36685d7e5266c44c1d0000000000001976a91464a2829a3937da00a7c3a929da7fbf7c77ca532988ac02483045022100f3cab7691752e757709044555925c4d73fcbae25731a67afeb6b3027973c836b022032fdfc94b1f7723e523ba4f966c5fc4a5867f613d0f516c4e29efffb2e67db5a012102de6f8a797d2d9df4f9801ce5eb26ffdeabf41d022a74c2e8d308cc2bd5bb75e300000000
+
+Unlocking Tx:
+01000000000101d1edf79fd1e372ab81409d99f3fafe4212ea3028e1add1f1cc7a826ffc56e6690000000000ffffffff01dc05000000000000160014a1c9e52a87c3b6e8f0bd3f734da9d42c7af35851044730440220040da7f0362c3f74880975ca9a443dff27cc77b555e385559eee6c579faeed79022014a48f021fa6a7227f92dc8e4e493224f2b6758c9aee94847fa5c9340a153061012102ece4521a83e3f569fa3119adbbd63e3722b1c5008318365ceb2954da3c0ac0400a7465737453336372657430a914dd62e2a7610e7e2143065c198a1fefe6596d992c8876a914a1c9e52a87c3b6e8f0bd3f734da9d42c7af3585188ac00000000
+```
+
 
 ## Multisig
 Regtest output here.

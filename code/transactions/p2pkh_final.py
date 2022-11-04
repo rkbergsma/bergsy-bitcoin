@@ -28,35 +28,7 @@ from lib.helper  import decode_address
 from lib.hash    import hash256
 from lib.sign    import sign_tx
 from lib.rpc     import RpcSocket
-
-def get_utxos(rpc, amt):
-    utxos = []
-    tx_in_sum = 0
-    i = 0
-    while tx_in_sum < amt:
-        utxo = rpc.get_utxo(i)
-        utxos.append(utxo)
-        tx_in_sum = tx_in_sum + utxo['value']
-        i = i + 1
-    return utxos
-
-def get_fee():
-    fee = input("Enter fee in satoshis (or press enter for default 1000): ")
-    try:
-        fee = int(fee)
-    except ValueError:
-        fee = 1000
-        print("Using default fee of 1000")
-    return fee
-
-def get_amount():
-    amount = input("Enter amount to send (in satoshis): ")
-    try:
-        amount = int(amount)
-    except ValueError:
-        print("Invalid amount, must be an integer")
-        raise
-    return amount
+from lib.helper  import get_utxos, get_fee, get_amount
 
 # Init wallet:
 wallet = input("Enter wallet name: ")

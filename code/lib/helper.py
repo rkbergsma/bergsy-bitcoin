@@ -57,3 +57,33 @@ def convert_to_wif(key, testnet=True):
     ver = 0x80 if not testnet else 0xEF
     raw = get_bytes(key + '01')
     return base58_address(raw, ver=ver)
+
+
+def get_utxos(rpc, amt):
+    utxos = []
+    tx_in_sum = 0
+    i = 0
+    while tx_in_sum < amt:
+        utxo = rpc.get_utxo(i)
+        utxos.append(utxo)
+        tx_in_sum = tx_in_sum + utxo['value']
+        i = i + 1
+    return utxos
+
+def get_fee():
+    fee = input("Enter fee in satoshis (or press enter for default 500): ")
+    try:
+        fee = int(fee)
+    except ValueError:
+        fee = 500
+        print("Using default fee of 500")
+    return fee
+
+def get_amount():
+    amount = input("Enter amount to send (in satoshis): ")
+    try:
+        amount = int(amount)
+    except ValueError:
+        print("Invalid amount, must be an integer")
+        raise
+    return amount

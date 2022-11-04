@@ -14,6 +14,7 @@ def sign_tx(tx_data, txin_idx, txin_val, script, key, **kwargs):
 
     # Parse the redeem script for the transaction.
     if type(script) == str and len(script) == 40:
+        print("SCRIPT HERE:", script)
         script = f'76a914{script}88ac'
 
     # Convert the private key into a signing key.
