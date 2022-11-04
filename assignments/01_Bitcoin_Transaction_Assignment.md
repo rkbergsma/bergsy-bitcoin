@@ -117,7 +117,28 @@ And finally the screeshots showing bergs-wallet and bob-wallet and the 1BTC tran
 ![Bob Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/bob_wallet_p2pkh.png)   
 
 
-Link to testnet transaction.
+Testnet:  
+[Testnet Transaction Link](https://mempool.space/testnet/tx/a79e43ff1304335d31995b15f2185957da4a28001fa41bcf0dc7beb9cd658ba0)
+Console Output:  
+```
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./p2pkh_final.py 
+Enter wallet name: bergs-testnet
+Enter amount to send (in satoshis): 5000
+Enter fee in satoshis (or press enter for default 1000): 500
+Select one of the following options:
+(a) Enter recipient address
+(w) Enter recipient wallet name in bitcoin core:
+a
+Enter recipient payment address: miQycgF36Rw1CH27uvkEPaADRUYAYzFVUq
+
+## Pay-to-Pubkey-Hash Example ##
+
+-- Transaction Id --
+a79e43ff1304335d31995b15f2185957da4a28001fa41bcf0dc7beb9cd658ba0
+
+-- Transaction Hex --
+010000000001018ed4f2e4a71dc5b557e6b476b673a3273e53b1fe073ae3eccb95b1653616aa870000000000ffffffff0288130000000000001976a9141fc6fbffe3dc4d5d14eec562b2e5c60fa38e2b2588ac94110000000000001976a91423d579fc44220053f8de54c73f61df619533ccb788ac024730440220287b16f8f3206b8dd34626e38c96bde9f07c5b9bf336fe2b94abe6b3645d2e2302206858ddde6feaac795c731e0cfb5a6f0b262361e14822a4676c55436916419959012103a6e62d75d1d107fe8b969ed1b4437918bb2403083e1cfe97732fa8ffdb98e21100000000
+```
 
 ## Pay-to-Witness Public Key Hash (p2wpkh)
 Regtest output here.
