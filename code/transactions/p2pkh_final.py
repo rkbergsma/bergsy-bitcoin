@@ -82,7 +82,10 @@ receiver_address = None
 while receiver_type != "a" and receiver_type != "w":
     receiver_type = input("Select one of the following options:\n(a) Enter recipient address\n(w) Enter recipient wallet name in bitcoin core:\n")
 if receiver_type == "a":
-    receiver_address = input("Enter recipient payment address: ")
+    rec_address = input("Enter recipient payment address: ")
+    if rec_address.startswith('tb1') or rec_address.startswith('bc1'):
+        raise Exception("Only legacy non segwit addresses supported")
+    receiver_address = {'address': rec_address}
 elif receiver_type == "w":
     receiver_wallet = input("Enter recipient wallet name: ")
     receiver_rpc = RpcSocket({ 'wallet': receiver_wallet })
@@ -90,6 +93,9 @@ elif receiver_type == "w":
     receiver_address = receiver_rpc.get_recv(fmt='base58')
 
 receiver_pubkey_hash = decode_address(receiver_address['address'])
+
+# print(receiver_pubkey_hash)
+# sys.exit()
 
 # Set the amount to send and change value
 utxos_sum = sum(u['value'] for u in utxos)
@@ -153,5 +159,5 @@ print(f'''
 {encode_tx(tx)}
 ''')
 
-print("Would send transaction here")
-#rpc.send_transaction(tx)
+#print("Would send transaction here")
+rpc.send_transaction(tx)
