@@ -118,8 +118,8 @@ And finally the screeshots showing bergs-wallet and bob-wallet and the 1BTC tran
 
 
 Testnet:  
-[Testnet Transaction Link](https://mempool.space/testnet/tx/a79e43ff1304335d31995b15f2185957da4a28001fa41bcf0dc7beb9cd658ba0)
-Console Output:  
+[Testnet Transaction Link](https://mempool.space/testnet/tx/a79e43ff1304335d31995b15f2185957da4a28001fa41bcf0dc7beb9cd658ba0)  
+Console Output:   
 ```
 (bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./p2pkh_final.py 
 Enter wallet name: bergs-testnet
