@@ -17,7 +17,12 @@ https://bitcoinfaucet.uo1.net
 https://mempool.space/testnet
 
 ## Solution
-There are several transaction types that are detailed in this repository and were tested on regtest and then used on testnet. Each of these transactions was generated "by hand" using Python, and then broadcast to the Bitcoin Test Network via JSON RPC calls to bitcoin core.
+There are several transaction types that are detailed in this repository and were tested on regtest and then used on testnet. Each of these transactions was generated "by hand" using Python, and then broadcast to the Bitcoin Test Network via JSON RPC calls to bitcoin core. The five transaction types are:
+1. Pay-to-Public Key Hash (p2pkh)
+2. Pay-to-Witness Public Key Hash (p2wpkh)
+3. Pay-to-Witness Script Hash (p2wsh)
+4. Multisig
+5. Timelock
 
 ## Pay-to-Public Key Hash (p2pkh)
 Output from testing on regtest:  
