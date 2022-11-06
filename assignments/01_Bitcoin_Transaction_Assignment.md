@@ -253,7 +253,67 @@ Unlocking Tx:
 
 
 ## Multisig
-Regtest output here.
+Output from testing on regtest:  
+```
+// Use the -l option to create the locking transaction. You will need the pubkeys of the addresses of the two other participants.
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./multisig_final.py -l
+Enter wallet name to fund multisig: bergs-wallet
+Enter amount to send (in satoshis): 1000000000
+Enter fee in satoshis (or press enter for default 500): 
+Using default fee of 500
+Enter recipient pubkey: 034c8081617ee9df9caee1442af268cbdd21dc46fab499c64b3f301ff006dfd15c  // one of the multisig participants generates an address and provides the pubkey to the creator
+Enter recipient pubkey: 03349855b54e14016468177a8dd60ba448c935207ac7ae720e98249f6a984a6d2b  // other multisig participant generates an address and provides the pubkey to the creator
+Party 1 Address: bcrt1qacqf4mrwt6lmghedcrqdlnhs8lnntcg4jpd6xp
+
+    ## Pay-to-Witness-Pubkey-Hash Example ##
+
+    -- Transaction Id --
+    3eefc34cd19bca11c4e5972c5b81f8c4ac6ade88f797d41e131afd749bacd5b1
+
+    -- Transaction Hex --
+    010000000001010d17f8ee57fa376bd517caf7325ff8e2f61408279bc2756d8481c1a4200866b40000000000ffffffff0200ca9a3b00000000220020a362b080c6051a59697f04fb4e4c1420a52f267424dac340058f82971a3a57510c266bee000000001600149be7629ae11e3ee8c0c0bda3370c872af3385e6a0248304502210091c891ceabf02f4d229a80320ea8b578fc3672037db62f7b70aabdb38bea054002204de74e699e521c69392dc87c0a1f27358c72d695dc51803bbc5a0787a2c1f202012102f8ef2d77f50645b896eb199f3809b22cbfda1032229b8975b3e41e9544be9ae600000000
+    
+Generating psbt redeem TX.
+Enter party 1 address: bcrt1qacqf4mrwt6lmghedcrqdlnhs8lnntcg4jpd6xp
+Enter party 2 address: bcrt1qlgj3mhnwh2gamkcnz0v7xchy6v0393htssnvx4
+Enter party 3 address: bcrt1q55ydpczp7gs88vmtxp7j9p8ak3jjcwngn0rsxd
+Writing file psbt.json                                                                 // this psbt.json can be sent to any multisig participant to sign
+
+// Contents of psbt.json
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ cat psbt.json 
+{"redeem_script": "522102bf904657a784807a14716714b4ce217de79c799d325dc02247f856479977b53621034c8081617ee9df9caee1442af268cbdd21dc46fab499c64b3f301ff006dfd15c2103349855b54e14016468177a8dd60ba448c935207ac7ae720e98249f6a984a6d2b53ae", "amount": 1000000000, "redeem_tx": {"version": 1, "vin": [{"txid": "3eefc34cd19bca11c4e5972c5b81f8c4ac6ade88f797d41e131afd749bacd5b1", "vout": 0, "script_sig": [], "sequence": 4294967295}], "vout": [{"value": 333332333, "script_pubkey": [0, "ee009aec6e5ebfb45f2dc0c0dfcef03fe735e115"]}, {"value": 333333333, "script_pubkey": [0, "fa251dde6eba91dddb1313d9e362e4d31f12c6eb"]}, {"value": 333333333, "script_pubkey": [0, "a508d0e041f22073b36b307d2284fdb4652c3a68"]}], "locktime": 0}}
+
+// Use the -s option to sign the transaction, with -p pointing to the psbt file
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./multisig_final.py -s -p psbt.json
+Reading in psbt: psbt.json
+Enter wallet name to connect for RPC: test-wallet
+Enter address you are signing for: bcrt1qlgj3mhnwh2gamkcnz0v7xchy6v0393htssnvx4
+Please enter index of your signature: 1
+Writing file psbt_signed.json                    // send this psbt_signed.json to any other participant to be get at least one more signature
+
+// Use the -s option to sign the transaction, with -p pointing to the psbt file
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./multisig_final.py -s -p psbt_signed.json
+Reading in psbt: psbt_signed.json
+Enter wallet name to connect for RPC: bergs-wallet
+Enter address you are signing for: bcrt1qacqf4mrwt6lmghedcrqdlnhs8lnntcg4jpd6xp
+Please enter index of your signature: 0
+Writing file psbt_signed.json
+
+// Use the -r option to create the final redeem transaction which contains at least 2 signatures
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./multisig_final.py -r -p psbt_signed.json
+Enter wallet name to connect for RPC: bergs-wallet
+Reading in psbt: psbt_signed.json
+
+Final Valid Unlocking Tx:
+01000000000101b1d5ac9b74fd1a131ed497f788de6aacc4f8815b2c97e5c411ca9bd14cc3ef3e0000000000ffffffff036d3fde1300000000160014ee009aec6e5ebfb45f2dc0c0dfcef03fe735e1155543de1300000000160014fa251dde6eba91dddb1313d9e362e4d31f12c6eb5543de1300000000160014a508d0e041f22073b36b307d2284fdb4652c3a680400483045022100fca72c04c0f770481675d0d8b8fc52f842fee4757e331d34dde6248b4a7d611802204c38260edfcd3224a84915e2788451aef74a5dc911dfa91e4c4f3621c8d9a4b801483045022100a73eea74686fa5d3baa06cdcabec8d87d0aed77980f6e68bec4d7943c1a052aa02204243a051b92ea773b99c028cc20f14cf75e24d8085f7d5aa2cf3f3b72ed621a70169522102bf904657a784807a14716714b4ce217de79c799d325dc02247f856479977b53621034c8081617ee9df9caee1442af268cbdd21dc46fab499c64b3f301ff006dfd15c2103349855b54e14016468177a8dd60ba448c935207ac7ae720e98249f6a984a6d2b53ae00000000
+Would use rpc to send transaction here
+```
+
+Here are some screenshots from each wallet showing the 10 BTC from bergs-wallet funding the multisig, followed be the outputs being split equally among all participants.
+![Bergs Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/multisig_bergs_wallet.png)  
+![Test Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/test_bergs_wallet.png)  
+![Bob Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/multisig_bob_wallet.png)  
+
 
 Link to testnet transaction.
 

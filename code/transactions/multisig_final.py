@@ -55,7 +55,6 @@ def generate_multisig_script(rpc):
     ]
     redeem_script = encode_script(script_words, prepend_len=False).hex()
     print("Party 1 Address:", party1_recv['address'])
-    print("Redeem script:", redeem_script)
     #script_hash = sha256(redeem_script).hex()
     return redeem_script
 
@@ -249,7 +248,6 @@ def sign(redeem_tx, locking_tx_value, redeem_script, party):
         redeem_script,
         party['priv_key']
     )
-    print("Signature for multisig:", signature)
     return signature
 
 def get_addresses(rpc):
