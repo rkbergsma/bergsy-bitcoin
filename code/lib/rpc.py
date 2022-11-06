@@ -131,6 +131,28 @@ class RpcSocket:
             'redeem_script': f'1976a914{pubkey_hash}88ac',
         }
 
+    def get_address_info(self, address=None): # differs from above because you might want to get an address that you don't own
+        assert address
+        
+        address_info = {
+            'address': address
+        }
+        try:
+            public_key  = self.call('getaddressinfo', address)['pubkey'] 
+            pubkey_hash = hash160(public_key).hex()
+            address_info['pub_key'] = public_key
+            address_info['pubkey_hash'] = pubkey_hash
+            address_info['redeem_script'] = f'1976a914{pubkey_hash}88ac',
+
+            encoded_key = self.call('dumpprivkey', address)
+            address_info['priv_key'] = decode_address(encoded_key)
+        except:
+            pass
+        return address_info
+
     def send_transaction(self, transaction):
         encoded_tx = encode_tx(transaction)
         self.call('sendrawtransaction', encoded_tx)
+
+    def get_transaction(self, transaction_id):
+        return self.call('gettransaction', transaction_id)

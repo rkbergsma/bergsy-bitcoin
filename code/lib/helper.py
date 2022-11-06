@@ -5,7 +5,6 @@ from .bech32 import encode, decode
 from .format import get_bytes
 from .hash import hash256, hash160
 
-
 def hash_script(script, fmt='hash160'):
     ''' Provides the hash for a Bitcoin script program.
     '''
@@ -87,3 +86,8 @@ def get_amount():
         print("Invalid amount, must be an integer")
         raise
     return amount
+
+def get_change_address(rpc):
+    change_txout     = rpc.get_recv()
+    _, change_redeem_script = decode_address(change_txout['address'])
+    return change_redeem_script
