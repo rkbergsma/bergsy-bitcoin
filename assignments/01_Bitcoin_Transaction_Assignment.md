@@ -315,7 +315,67 @@ Here are some screenshots from each wallet showing the 10 BTC from bergs-wallet 
 ![Bob Wallet](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/images/multisig_bob_wallet.png)  
 
 
-Link to testnet transaction.
+Testnet:  
+[Funding Testnet Transaction Link](https://mempool.space/testnet/tx/efd2a34110a9338d3e64d3316a49e61c157f32b530ca0bffb47f603a8d3d8bcd)   
+[Redeeming Testnet Transaction Link](https://mempool.space/testnet/tx/8b9a817247f1034c963d1794a28e4df98425f302c9588044ae343c22eef6fe1a)    
+
+First, Ryan created and funded the transaction:
+```
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./multisig_final.py -l
+Enter wallet name to fund multisig: bergs-testnet
+Enter amount to send (in satoshis): 300000
+Enter fee in satoshis (or press enter for default 500): 
+Using default fee of 500
+Enter recipient pubkey: 03d166217f748de03cad6ec51bb10825ff434f5d0aeefa9e8d0dc186c3d934f959
+Enter recipient pubkey: 029ec0efa801cab42933fca5dbc2d18d9c67ed4bee4e2b26b8e5d4cc0433a195b3
+Party 1 Address: tb1ql5sqz72a3s9ezn66zcnut9lq6jvsglj963j93f
+
+    ## Pay-to-Witness-Pubkey-Hash Example ##
+
+    -- Transaction Id --
+    efd2a34110a9338d3e64d3316a49e61c157f32b530ca0bffb47f603a8d3d8bcd
+
+    -- Transaction Hex --
+    01000000000101156e71b23f2ed7928936cf64938265b421a1ef699820ac3c03156539223dd0bd0000000000ffffffff02e093040000000000220020bcaaf11b3c74b80377fccba2d9779679872eff40798ddb056da1228b6228ab64a331130000000000160014b41e50257cf019c95da627043d95dd93e196805d02483045022100a248cbb0ad0a9338c5c503fa698e305bbbe54dee9173d7ad14f4bc1cfa0d87e802201b06832a94a8e4501044ffe4c2ad7782396325518401826a1ca54501a9f587b00121032bfd360b1b1995bd3814519e7d2099ec9cbe04fd0e9ffe9ec985faf919f9abf100000000
+    
+Generating psbt redeem TX.
+Enter party 1 address: tb1ql5sqz72a3s9ezn66zcnut9lq6jvsglj963j93f
+Enter party 2 address: tb1q6mqeq3gkekepp6f8nza2sptwkqks0qp4hja8tj
+Enter party 3 address: tb1q6z4n62j6xjcvjyps4gwzcadyw6gk4cwxfwm6h7
+Writing file psbt.json
+```
+
+Then, Ryan sent Jeff the psbt.json and Jeff signed the transaction:
+```
+jtipps@DESKTOP-J69RTBS:~/GitRepos/bergsy-bitcoin/code/transactions$ ./multisig_final.py -s -p psbt.json
+Reading in psbt: psbt.json
+Enter wallet name to connect for RPC: tn_wallet
+Enter address you are signing for: tb1q6mqeq3gkekepp6f8nza2sptwkqks0qp4hja8tj
+Please enter index of your signature: 1
+Writing file psbt_signed.json
+```
+
+Then, Jeff sent Bob the psbt_signed.json and Bob signed it:
+```
+(bitcoin) ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/transactions$ ./multisig_final.py -s -p psbt_signed.json 
+Reading in psbt: psbt_signed.json
+Enter wallet name to connect for RPC: bob-testnet
+Enter address you are signing for: tb1q6z4n62j6xjcvjyps4gwzcadyw6gk4cwxfwm6h7
+Please enter index of your signature: 2
+Writing file psbt_signed.json
+```
+
+Then, Jeff sent the fully signed psbt_signed.json back to Jeff for him to broadcast it:
+```
+jtipps@DESKTOP-J69RTBS:~/GitRepos/bergsy-bitcoin/code/transactions$ ./multisig_final.py -r -p psbt_signed.json
+Enter wallet name to connect for RPC: tn_wallet
+Reading in psbt: psbt_signed.json
+
+Final Valid Unlocking Tx:
+01000000000101cd8b3d8d3a607fb4ff0bca30b5327f151ce6496a31d3643e8d33a91041a3d2ef0000000000ffffffff03b882010000000000160014fd2001795d8c0b914f5a1627c597e0d499047e45a086010000000000160014d6c1904516cdb210e92798baa8056eb02d078035a086010000000000160014d0ab3d2a5a34b0c91030aa1c2c75a476916ae1c60400483045022100b51cc5a916ca0473a07a7f56d77c3ead2a6594e9221f99311028267e5ea8b1f3022002c068c0087e40df6c4b6d580029a7c01e20ade226ba6129bd609ca9a617919501483045022100c2aa12a55c35e6c92092ed3786873f16cf00ce45673823711d56a6776cd6013f0220409b55993aa4ccc44937efe50f29e8c5f2f5b4b2a8557dfb899c5dcd77d1bd95016952210344cf6ea9b9d91e38c15a09a37be5d6675e710277db52295a2dd10079a7be00672103d166217f748de03cad6ec51bb10825ff434f5d0aeefa9e8d0dc186c3d934f95921029ec0efa801cab42933fca5dbc2d18d9c67ed4bee4e2b26b8e5d4cc0433a195b353ae00000000
+Would use rpc to send transaction here
+```
+
 
 ## Timelock
 Regtest output here.
