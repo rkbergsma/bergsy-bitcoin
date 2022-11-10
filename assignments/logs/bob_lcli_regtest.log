@@ -1,0 +1,285 @@
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli create
+Input wallet password: 
+Confirm password: 
+
+Do you have an existing cipher seed mnemonic or extended master root key you want to use?
+Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
+or 'n' to create a new seed (Enter y/x/n): n
+
+Your cipher seed can optionally be encrypted.
+Input your passphrase if you wish to encrypt it (or press enter to proceed without a cipher seed passphrase): 
+
+Generating fresh cipher seed...
+
+!!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+---------------BEGIN LND CIPHER SEED---------------
+ 1. abandon   2. pipe     3. cost     4. fog     
+ 5. horror    6. street   7. burden   8. because 
+ 9. casino   10. finish  11. walnut  12. accident
+13. cup      14. gun     15. kidney  16. valve   
+17. about    18. ridge   19. acid    20. lottery 
+21. notable  22. parrot  23. slice   24. catalog 
+---------------END LND CIPHER SEED-----------------
+
+!!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+lnd successfully initialized!
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli newaddress p2wkh
+{
+    "address": "bcrt1q5m2ud78lmtdmm3qy5237q0078guwt4n3pvn9d6"
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli getinfo
+{
+    "version": "0.15.3-beta commit=v0.15.3-beta",
+    "commit_hash": "b4e7131bdb47531ad2f00ce345ddcdb58935bba5",
+    "identity_pubkey": "028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192",
+    "alias": "bob",
+    "color": "#3399ff",
+    "num_pending_channels": 0,
+    "num_active_channels": 0,
+    "num_inactive_channels": 0,
+    "num_peers": 0,
+    "block_height": 367,
+    "block_hash": "4346738a9485166f2e9e11a139d7f4418fefa7d1653284f9f411e90bbab8eb0e",
+    "best_header_timestamp": "1668057248",
+    "synced_to_chain": true,
+    "synced_to_graph": false,
+    "testnet": false,
+    "chains": [
+        {
+            "chain": "bitcoin",
+            "network": "regtest"
+        }
+    ],
+    "uris": [
+    ],
+    "features": {
+        "0": {
+            "name": "data-loss-protect",
+            "is_required": true,
+            "is_known": true
+        },
+        "5": {
+            "name": "upfront-shutdown-script",
+            "is_required": false,
+            "is_known": true
+        },
+        "7": {
+            "name": "gossip-queries",
+            "is_required": false,
+            "is_known": true
+        },
+        "9": {
+            "name": "tlv-onion",
+            "is_required": false,
+            "is_known": true
+        },
+        "12": {
+            "name": "static-remote-key",
+            "is_required": true,
+            "is_known": true
+        },
+        "14": {
+            "name": "payment-addr",
+            "is_required": true,
+            "is_known": true
+        },
+        "17": {
+            "name": "multi-path-payments",
+            "is_required": false,
+            "is_known": true
+        },
+        "23": {
+            "name": "anchors-zero-fee-htlc-tx",
+            "is_required": false,
+            "is_known": true
+        },
+        "27": {
+            "name": "shutdown-any-segwit",
+            "is_required": false,
+            "is_known": true
+        },
+        "30": {
+            "name": "amp",
+            "is_required": true,
+            "is_known": true
+        },
+        "31": {
+            "name": "amp",
+            "is_required": false,
+            "is_known": true
+        },
+        "45": {
+            "name": "explicit-commitment-type",
+            "is_required": false,
+            "is_known": true
+        },
+        "2023": {
+            "name": "script-enforced-lease",
+            "is_required": false,
+            "is_known": true
+        }
+    },
+    "require_htlc_interceptor": false
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli getinfo
+{
+    "version": "0.15.3-beta commit=v0.15.3-beta",
+    "commit_hash": "b4e7131bdb47531ad2f00ce345ddcdb58935bba5",
+    "identity_pubkey": "028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192",
+    "alias": "bob",
+    "color": "#3399ff",
+    "num_pending_channels": 0,
+    "num_active_channels": 1,
+    "num_inactive_channels": 0,
+    "num_peers": 1,
+    "block_height": 373,
+    "block_hash": "0f458d61e20f35c500e93b5077ea5c6596f1afcf7ed236d58d3b4e9cb0c9e76b",
+    "best_header_timestamp": "1668057385",
+    "synced_to_chain": true,
+    "synced_to_graph": true,
+    "testnet": false,
+    "chains": [
+        {
+            "chain": "bitcoin",
+            "network": "regtest"
+        }
+    ],
+    "uris": [
+    ],
+    "features": {
+        "0": {
+            "name": "data-loss-protect",
+            "is_required": true,
+            "is_known": true
+        },
+        "5": {
+            "name": "upfront-shutdown-script",
+            "is_required": false,
+            "is_known": true
+        },
+        "7": {
+            "name": "gossip-queries",
+            "is_required": false,
+            "is_known": true
+        },
+        "9": {
+            "name": "tlv-onion",
+            "is_required": false,
+            "is_known": true
+        },
+        "12": {
+            "name": "static-remote-key",
+            "is_required": true,
+            "is_known": true
+        },
+        "14": {
+            "name": "payment-addr",
+            "is_required": true,
+            "is_known": true
+        },
+        "17": {
+            "name": "multi-path-payments",
+            "is_required": false,
+            "is_known": true
+        },
+        "23": {
+            "name": "anchors-zero-fee-htlc-tx",
+            "is_required": false,
+            "is_known": true
+        },
+        "27": {
+            "name": "shutdown-any-segwit",
+            "is_required": false,
+            "is_known": true
+        },
+        "30": {
+            "name": "amp",
+            "is_required": true,
+            "is_known": true
+        },
+        "31": {
+            "name": "amp",
+            "is_required": false,
+            "is_known": true
+        },
+        "45": {
+            "name": "explicit-commitment-type",
+            "is_required": false,
+            "is_known": true
+        },
+        "2023": {
+            "name": "script-enforced-lease",
+            "is_required": false,
+            "is_known": true
+        }
+    },
+    "require_htlc_interceptor": false
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli channelbalance
+{
+    "balance": "0",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "remote_balance": {
+        "sat": "996530",
+        "msat": "996530000"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli addinvoice --amt=10000
+{
+    "r_hash": "f06d8fe2e5827f88bcffbc1f4b4e58a261d53b6e6a09274dd072325832108b1f",
+    "payment_request": "lnbcrt100u1p3kezdapp57pkclch9sflc308lhs05knjc5fsa2wmwdgyjwnwswge9svss3v0sdqqcqzpgxqyz5vqsp5m8de8q5nwcw0g3m4whs4e6arv9h5rwgvhjf4qtewrf36468uc8js9qyyssqh9czh4q5yzgr6tjp5ujjc9e46kga3syfwaevy49hptyv8a8yaqp3q5n65f7e9m6na44h9kzxg9y7gy5a5s0n0ak8paz2lrw4p75j82gqp27rrv",
+    "add_index": "1",
+    "payment_addr": "d9db938293761cf4477575e15ceba3616f41b90cbc93502f2e1a63aae8fcc1e5"
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli channelbalance
+{
+    "balance": "10000",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "10000",
+        "msat": "10000000"
+    },
+    "remote_balance": {
+        "sat": "986530",
+        "msat": "986530000"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$

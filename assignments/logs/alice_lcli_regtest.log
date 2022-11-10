@@ -1,0 +1,84 @@
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli create
+Input wallet password: 
+Confirm password: 
+
+Do you have an existing cipher seed mnemonic or extended master root key you want to use?
+Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
+or 'n' to create a new seed (Enter y/x/n): n
+
+Your cipher seed can optionally be encrypted.
+Input your passphrase if you wish to encrypt it (or press enter to proceed without a cipher seed passphrase): 
+
+Generating fresh cipher seed...
+
+!!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+---------------BEGIN LND CIPHER SEED---------------
+ 1. about      2. decline   3. drastic   4. amount
+ 5. scorpion   6. palace    7. adjust    8. fatal 
+ 9. any       10. differ   11. actress  12. day   
+13. solution  14. car      15. paper    16. funny 
+17. invest    18. plate    19. merge    20. found 
+21. rally     22. butter   23. upgrade  24. lock  
+---------------END LND CIPHER SEED-----------------
+
+!!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+lnd successfully initialized!
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli newaddress p2wkh
+{
+    "address": "bcrt1q5fh2fqa0fn7xu0z9zc3fuzcmgxlhl4ge5d437r"
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli connect 028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192@localhost:9737
+{
+
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli openchannel --node_key=028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192 --local_amt=1000000
+{
+	"funding_txid": "98a174dc7e80789d3a19adc4078c59e41c7fe1480decd8242bdf5db7268dc45e"
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli sendpayment --pay_req=lnbcrt100u1p3kezdapp57pkclch9sflc308lhs05knjc5fsa2wmwdgyjwnwswge9svss3v0sdqqcqzpgxqyz5vqsp5m8de8q5nwcw0g3m4whs4e6arv9h5rwgvhjf4qtewrf36468uc8js9qyyssqh9czh4q5yzgr6tjp5ujjc9e46kga3syfwaevy49hptyv8a8yaqp3q5n65f7e9m6na44h9kzxg9y7gy5a5s0n0ak8paz2lrw4p75j82gqp27rrv
+Payment hash: f06d8fe2e5827f88bcffbc1f4b4e58a261d53b6e6a09274dd072325832108b1f
+Description: 
+Amount (in satoshis): 10000
+Fee limit (in satoshis): 500
+Destination: 028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192
+Confirm payment (yes/no): yes
++------------+--------------+--------------+--------------+-----+----------+-----------------+-------+
+| HTLC_STATE | ATTEMPT_TIME | RESOLVE_TIME | RECEIVER_AMT | FEE | TIMELOCK | CHAN_OUT        | ROUTE |
++------------+--------------+--------------+--------------+-----+----------+-----------------+-------+
+| SUCCEEDED  |        0.031 |        0.195 | 10000        | 0   |      416 | 404620279087104 | bob   |
++------------+--------------+--------------+--------------+-----+----------+-----------------+-------+
+Amount + fee:   10000 + 0 sat
+Payment hash:   f06d8fe2e5827f88bcffbc1f4b4e58a261d53b6e6a09274dd072325832108b1f
+Payment status: SUCCEEDED, preimage: 84ac8ae5ecc17be8919a8ed77f933f827b129626114bd12275975c7befadfa0c
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli channelbalance
+{
+    "balance": "986530",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "986530",
+        "msat": "986530000"
+    },
+    "remote_balance": {
+        "sat": "10000",
+        "msat": "10000000"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$
