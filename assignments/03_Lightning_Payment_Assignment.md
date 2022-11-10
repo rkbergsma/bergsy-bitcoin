@@ -243,6 +243,80 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli c
     }
 }
 
+// Bob closes channel
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli closechannel 98a174dc7e80789d3a19adc4078c59e41c7fe1480decd8242bdf5db7268dc45e
+{
+	"closing_txid": "f1da01e6681ece6685fa01ccb652aad7afa56983012fa6e4e0be72438f8f6fc9"
+}
+
+// Bob sees channel is closed
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli channelbalance
+{
+    "balance": "0",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+
+// Alice sees channel is closed
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli channelbalance
+{
+    "balance": "0",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+
+// Bob sends coins from lightning node back to on-chain
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli sendcoins bcrt1qmfy0laf7x6nv502glx4w97rcqrrezay3ymcv3p 10000
+{
+    "txid": "039bdf0a2e21a9dc1365bc8eb8f841bc6c1a452a3d5e365559a636d407dcbd93"
+}
+
 ```
 
 ### Testnet:
