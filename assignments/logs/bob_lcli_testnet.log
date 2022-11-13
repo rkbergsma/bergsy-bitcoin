@@ -1,0 +1,285 @@
+Bob Testnet:
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli create
+Input wallet password: 
+Confirm password: 
+
+Do you have an existing cipher seed mnemonic or extended master root key you want to use?
+Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
+or 'n' to create a new seed (Enter y/x/n): n 
+
+Your cipher seed can optionally be encrypted.
+Input your passphrase if you wish to encrypt it (or press enter to proceed without a cipher seed passphrase): 
+
+Generating fresh cipher seed...
+
+!!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+<REDACTED>
+
+!!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+lnd successfully initialized!
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli newaddress p2wkh
+{
+    "address": "tb1qpu06hsmnhue7n5px2g2w7sjx7jsv4lj7nyln67"
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli getinfo
+{
+    "version": "0.15.3-beta commit=v0.15.3-beta",
+    "commit_hash": "b4e7131bdb47531ad2f00ce345ddcdb58935bba5",
+    "identity_pubkey": "023fe826962aa3e1108a50a64c1b4fe62ec821174f8b080add2446cf480ddfdfa3",
+    "alias": "bob",
+    "color": "#3399ff",
+    "num_pending_channels": 0,
+    "num_active_channels": 0,
+    "num_inactive_channels": 0,
+    "num_peers": 3,
+    "block_height": 2406004,
+    "block_hash": "0000000000000032f937bc75a2322b6b17931e1fafef86df362f3f18bebcf1c5",
+    "best_header_timestamp": "1668300829",
+    "synced_to_chain": true,
+    "synced_to_graph": false,
+    "testnet": true,
+    "chains": [
+        {
+            "chain": "bitcoin",
+            "network": "testnet"
+        }
+    ],
+    "uris": [
+    ],
+    "features": {
+        "0": {
+            "name": "data-loss-protect",
+            "is_required": true,
+            "is_known": true
+        },
+        "5": {
+            "name": "upfront-shutdown-script",
+            "is_required": false,
+            "is_known": true
+        },
+        "7": {
+            "name": "gossip-queries",
+            "is_required": false,
+            "is_known": true
+        },
+        "9": {
+            "name": "tlv-onion",
+            "is_required": false,
+            "is_known": true
+        },
+        "12": {
+            "name": "static-remote-key",
+            "is_required": true,
+            "is_known": true
+        },
+        "14": {
+            "name": "payment-addr",
+            "is_required": true,
+            "is_known": true
+        },
+        "17": {
+            "name": "multi-path-payments",
+            "is_required": false,
+            "is_known": true
+        },
+        "23": {
+            "name": "anchors-zero-fee-htlc-tx",
+            "is_required": false,
+            "is_known": true
+        },
+        "27": {
+            "name": "shutdown-any-segwit",
+            "is_required": false,
+            "is_known": true
+        },
+        "30": {
+            "name": "amp",
+            "is_required": true,
+            "is_known": true
+        },
+        "31": {
+            "name": "amp",
+            "is_required": false,
+            "is_known": true
+        },
+        "45": {
+            "name": "explicit-commitment-type",
+            "is_required": false,
+            "is_known": true
+        },
+        "2023": {
+            "name": "script-enforced-lease",
+            "is_required": false,
+            "is_known": true
+        }
+    },
+    "require_htlc_interceptor": false
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
+{
+    "balance": "0",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "249056",
+        "msat": "249056000"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli addinvoice --amt=50000
+{
+    "r_hash": "5eb3d3ab9cd01687a44ab8eb2558265a8183086a34533a6d40a769467627ccbd",
+    "payment_request": "lntb500u1p3hqnk3pp5t6ea82uu6qtg0fz2hr4j2kpxt2qcxzr2x3fn5m2q5a55va38ej7sdqqcqzpgxqyz5vqsp50l3ee3szqgr2l7cwc3asdea7yprsxdh3y05kl0rl62350xash8jq9qyyssqtdg2qyz7k4q2s82v4sv2y9mr89yfmerrkqfgg540mt9e7g5wm9dh0syv39l62hl43stdmq29z9v5ln807ttcjscwchspkyq3rx5zp4spfcq86f",
+    "add_index": "1",
+    "payment_addr": "7fe39cc6020206affb0ec47b06e7be20470336f123e96fbc7fd2a3479bb0b9e4"
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
+{
+    "balance": "50000",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "50000",
+        "msat": "50000000"
+    },
+    "remote_balance": {
+        "sat": "199056",
+        "msat": "199056000"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli sendpayment --pay_req=lntb200u1p3hq5z3pp5kjgdhv0a2ez8m37vckejexggym0ml8c8hawnuhj304hksw477sxqdqqcqzpgxqyz5vqsp5ymakk6ljtqkt69a06z25heg5shqkxfu0v7d3jlk4z00wju7hljns9qyyssqr4y3qkm7zznrp757v5ejvq08r4mw4psyg54nq2mxp7wkly3w6syy7kwpq5fzcsfe0663wgewlyycnvf295lkvuvrjdhd46vmkvwpn3cp8hwxmk
+Payment hash: b490dbb1fd56447dc7ccc5b32c990826dfbf9f07bf5d3e5e517d6f683abef40c
+Description: 
+Amount (in satoshis): 20000
+Fee limit (in satoshis): 1000
+Destination: 02e5f54bab50dd5be5a16edc9debe36a9c56d0c7a8887bdb672b565f129db9be1d
+Confirm payment (yes/no): yes
++------------+--------------+--------------+--------------+-----+----------+---------------------+-------+
+| HTLC_STATE | ATTEMPT_TIME | RESOLVE_TIME | RECEIVER_AMT | FEE | TIMELOCK | CHAN_OUT            | ROUTE |
++------------+--------------+--------------+--------------+-----+----------+---------------------+-------+
+| SUCCEEDED  |        0.026 |        0.174 | 20000        | 0   |  2406054 | 2645430473988177921 | ryan  |
++------------+--------------+--------------+--------------+-----+----------+---------------------+-------+
+Amount + fee:   20000 + 0 sat
+Payment hash:   b490dbb1fd56447dc7ccc5b32c990826dfbf9f07bf5d3e5e517d6f683abef40c
+Payment status: SUCCEEDED, preimage: f200403a57fff35b8563e718a83341218191c5fc4f58cad1961113320cff4d33
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
+{
+    "balance": "30000",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "30000",
+        "msat": "30000000"
+    },
+    "remote_balance": {
+        "sat": "219056",
+        "msat": "219056000"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
+{
+    "balance": "0",
+    "pending_open_balance": "0",
+    "local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "unsettled_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_local_balance": {
+        "sat": "0",
+        "msat": "0"
+    },
+    "pending_open_remote_balance": {
+        "sat": "0",
+        "msat": "0"
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli walletbalance
+{
+    "total_balance": "30000",
+    "confirmed_balance": "0",
+    "unconfirmed_balance": "30000",
+    "locked_balance": "0",
+    "reserved_balance_anchor_chan": "10000",
+    "account_balance": {
+        "default": {
+            "confirmed_balance": "0",
+            "unconfirmed_balance": "30000"
+        }
+    }
+}
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli walletbalance
+{
+    "total_balance": "30000",
+    "confirmed_balance": "0",
+    "unconfirmed_balance": "30000",
+    "locked_balance": "0",
+    "reserved_balance_anchor_chan": "10000",
+    "account_balance": {
+        "default": {
+            "confirmed_balance": "0",
+            "unconfirmed_balance": "30000"
+        }
+    }
+}

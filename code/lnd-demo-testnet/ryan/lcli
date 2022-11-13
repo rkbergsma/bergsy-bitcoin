@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+RPC_HOST="localhost:10009"
+MACAROON_PATH="$(pwd)/data/chain/bitcoin/testnet/admin.macaroon"
+DEFAULT_CONF="--network testnet --rpcserver $RPC_HOST --macaroonpath $MACAROON_PATH"
+./lncli $DEFAULT_CONF $@
