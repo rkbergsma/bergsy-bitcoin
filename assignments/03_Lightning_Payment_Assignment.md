@@ -321,13 +321,13 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli s
 
 ### Testnet:
 The 2 full logs for Regtest are located here:  
-![Ryan lcli](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/logs/ryab_lcli_testnet.log)  
-![Bob lcli](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/logs/bob_lcli_testnet.log)  
+![Ryan lcli](https://github.com/rkbergsma/bergsy-bitcoin/blob/master/assignments/logs/ryan_lcli_testnet.log)   
+![Bob lcli](https://github.com/rkbergsma/bergsy-bitcoin/blob/master/assignments/logs/bob_lcli_testnet.log)   
 
 Testnet Transaction:
-Transaction to fund the lightning node: https://mempool.space/testnet/tx/2554e18528a4a9f4d1a75f0fc1b7b5294497b2191c26d3c8b11df4665603137b
-Transaction to fund channel: https://mempool.space/testnet/tx/d9fa96e7eedee54fa3ed53bb631beb826aaf743a66b2238805125591562badc8
-Transaction to close the channel: https://mempool.space/testnet/tx/19d0278a3f2e12d9789fe59eec1fc9ddae9e450316b3b0de473f79e10d0d713f
+Transaction to fund the lightning node: https://mempool.space/testnet/tx/2554e18528a4a9f4d1a75f0fc1b7b5294497b2191c26d3c8b11df4665603137b  
+Transaction to fund channel: https://mempool.space/testnet/tx/d9fa96e7eedee54fa3ed53bb631beb826aaf743a66b2238805125591562badc8  
+Transaction to close the channel: https://mempool.space/testnet/tx/19d0278a3f2e12d9789fe59eec1fc9ddae9e450316b3b0de473f79e10d0d713f  
 
 The sequence below highlights the overall flow of events:
 ```
