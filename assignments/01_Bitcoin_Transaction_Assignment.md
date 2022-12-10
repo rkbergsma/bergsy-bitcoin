@@ -378,6 +378,4 @@ Would use rpc to send transaction here
 
 
 ## Timelock
-Regtest output here.
-
-Link to testnet transaction.
+See Bitbnb for example timelock transactions implemented: https://github.com/rkbergsma/Bitbnb.
