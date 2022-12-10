@@ -50,16 +50,18 @@ The 4 full logs for Regtest are located here:
 ![Bob lcli](https://github.com/rkbergsma/bergsy-bitcoin/tree/master/assignments/logs/bob_lcli_regtest.log)  
 
 The sequence below highlights the overall flow of events:
+### Alice starts her lnd node:
 ```
-// Alice starts her lnd node:
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lnd --configfile=lnd.conf
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
 2022-11-09 23:09:53.906 [INF] LTND: Version: 0.15.3-beta commit=v0.15.3-beta, build=production, logging=default, debuglevel=info
 2022-11-09 23:09:53.906 [INF] LTND: Active chain: Bitcoin (network=regtest)
 ...
+```
 
-// Alice creates wallet
+### Alice creates wallet
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli create
 Input wallet password: 
 Confirm password: 
@@ -68,16 +70,20 @@ Do you have an existing cipher seed mnemonic or extended master root key you wan
 Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
 or 'n' to create a new seed (Enter y/x/n): n
 ...
+```
 
-// Bob starts his lnd node: 
+### Bob starts his lnd node: 
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lnd --configfile=lnd.conf
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
 2022-11-09 23:12:38.113 [INF] LTND: Version: 0.15.3-beta commit=v0.15.3-beta, build=production, logging=default, debuglevel=info
 2022-11-09 23:12:38.113 [INF] LTND: Active chain: Bitcoin (network=regtest)
 ...
+```
 
-// Bob creates wallet
+### Bob creates wallet
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli create
 Input wallet password: 
 Confirm password: 
@@ -86,8 +92,10 @@ Do you have an existing cipher seed mnemonic or extended master root key you wan
 Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
 or 'n' to create a new seed (Enter y/x/n): n
 ...
+```
 
-// Alice creates new send address and address funded via Bitcoin core:
+### Alice creates new send address and address funded via Bitcoin core:
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli newaddress p2wkh
 {
     "address": "bcrt1q5fh2fqa0fn7xu0z9zc3fuzcmgxlhl4ge5d437r"
@@ -111,20 +119,26 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli g
     "num_active_channels": 0,
     "num_inactive_channels": 0,
 ...
+```
 
-// Alice connect with Bob
+### Alice connect with Bob
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli connect 028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192@localhost:9737
 {
 
 }
+```
 
-// Alice start channel with Bob
+### Alice start channel with Bob
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli openchannel --node_key=028ee94405efb9f3bacdc285db7116f8c34f1ea220999dd672facaa81795038192 --local_amt=1000000
 {
 	"funding_txid": "98a174dc7e80789d3a19adc4078c59e41c7fe1480decd8242bdf5db7268dc45e"
 }
+```
 
-// Bob checks and sees remote balance on Alice's end
+### Bob checks and sees remote balance on Alice's end
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli channelbalance
 {
     "balance": "0",
@@ -154,8 +168,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli c
         "msat": "0"
     }
 }
+```
 
-// Bob creates invoice 
+### Bob creates invoice 
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli addinvoice --amt=10000
 {
     "r_hash": "f06d8fe2e5827f88bcffbc1f4b4e58a261d53b6e6a09274dd072325832108b1f",
@@ -163,8 +179,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli a
     "add_index": "1",
     "payment_addr": "d9db938293761cf4477575e15ceba3616f41b90cbc93502f2e1a63aae8fcc1e5"
 }
+```
 
-// Alice pays invoice
+### Alice pays invoice
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli sendpayment --pay_req=lnbcrt100u1p3kezdapp57pkclch9sflc308lhs05knjc5fsa2wmwdgyjwnwswge9svss3v0sdqqcqzpgxqyz5vqsp5m8de8q5nwcw0g3m4whs4e6arv9h5rwgvhjf4qtewrf36468uc8js9qyyssqh9czh4q5yzgr6tjp5ujjc9e46kga3syfwaevy49hptyv8a8yaqp3q5n65f7e9m6na44h9kzxg9y7gy5a5s0n0ak8paz2lrw4p75j82gqp27rrv
 Payment hash: f06d8fe2e5827f88bcffbc1f4b4e58a261d53b6e6a09274dd072325832108b1f
 Description: 
@@ -180,8 +198,10 @@ Confirm payment (yes/no): yes
 Amount + fee:   10000 + 0 sat
 Payment hash:   f06d8fe2e5827f88bcffbc1f4b4e58a261d53b6e6a09274dd072325832108b1f
 Payment status: SUCCEEDED, preimage: 84ac8ae5ecc17be8919a8ed77f933f827b129626114bd12275975c7befadfa0c
+```
 
-// Alice sees payment in channel balance
+### Alice sees payment in channel balance
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli channelbalance
 {
     "balance": "986530",
@@ -211,8 +231,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli
         "msat": "0"
     }
 }
+```
 
-// Bob sees payment in channel balance
+### Bob sees payment in channel balance
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli channelbalance
 {
     "balance": "10000",
@@ -242,14 +264,18 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli c
         "msat": "0"
     }
 }
+```
 
-// Bob closes channel
+### Bob closes channel
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli closechannel 98a174dc7e80789d3a19adc4078c59e41c7fe1480decd8242bdf5db7268dc45e
 {
 	"closing_txid": "f1da01e6681ece6685fa01ccb652aad7afa56983012fa6e4e0be72438f8f6fc9"
 }
+```
 
-// Bob sees channel is closed
+### Bob sees channel is closed
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli channelbalance
 {
     "balance": "0",
@@ -279,8 +305,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli c
         "msat": "0"
     }
 }
+```
 
-// Alice sees channel is closed
+### Alice sees channel is closed
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli channelbalance
 {
     "balance": "0",
@@ -310,8 +338,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/alice$ ./lcli
         "msat": "0"
     }
 }
+```
 
-// Bob sends coins from lightning node back to on-chain
+### Bob sends coins from lightning node back to on-chain
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli sendcoins bcrt1qmfy0laf7x6nv502glx4w97rcqrrezay3ymcv3p 10000
 {
     "txid": "039bdf0a2e21a9dc1365bc8eb8f841bc6c1a452a3d5e365559a636d407dcbd93"
@@ -330,8 +360,9 @@ Transaction to fund channel: https://mempool.space/testnet/tx/d9fa96e7eedee54fa3
 Transaction to close the channel: https://mempool.space/testnet/tx/19d0278a3f2e12d9789fe59eec1fc9ddae9e450316b3b0de473f79e10d0d713f  
 
 The sequence below highlights the overall flow of events:
+
+### Ryan starts his lnd node:
 ```
-// Ryan starts his lnd node:
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lnd --configfile=lnd.conf
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
@@ -340,8 +371,10 @@ Automatically obtained bitcoind's RPC credentials
 2022-11-12 15:29:28.365 [INF] RPCS: RPC server listening on 127.0.0.1:10009
 2022-11-12 15:29:28.367 [INF] RPCS: gRPC proxy started at 0.0.0.0:8080
 ...
+```
 
-// Ryan creates wallet
+### Ryan creates wallet
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli create
 Input wallet password: 
 Confirm password: 
@@ -350,8 +383,10 @@ Do you have an existing cipher seed mnemonic or extended master root key you wan
 Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
 or 'n' to create a new seed (Enter y/x/n): n
 ...
+```
 
-// Bob starts his lnd node: 
+### Bob starts his lnd node: 
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lnd --configfile=lnd.conf
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
@@ -360,8 +395,10 @@ Automatically obtained bitcoind's RPC credentials
 2022-11-12 18:52:21.977 [INF] RPCS: RPC server listening on 127.0.0.1:10010
 2022-11-12 18:52:21.980 [INF] RPCS: gRPC proxy started at 0.0.0.0:8081
 ...
+```
 
-// Bob creates wallet
+### Bob creates wallet
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli create
 Input wallet password: 
 Confirm password: 
@@ -370,20 +407,26 @@ Do you have an existing cipher seed mnemonic or extended master root key you wan
 Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key 
 or 'n' to create a new seed (Enter y/x/n): n
 ...
+```
 
-// Ryan creates new send address and address funded via Bitcoin core:
+### Ryan creates new send address and address funded via Bitcoin core:
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli newaddress p2wkh
 {
     "address": "tb1q2lqehz7676l2cys0aeennjxkv5wa2wtg4st708"
 }
+```
 
-// Bob creates new send address and address funded via Bitcoin core:
+### Bob creates new send address and address funded via Bitcoin core:
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli newaddress p2wkh
 {
     "address": "tb1qpu06hsmnhue7n5px2g2w7sjx7jsv4lj7nyln67"
 }
+```
 
-// Get info of Bob's node (identity_pubkey) to add to Ryan's wallet to connect and create channel
+### Get info of Bob's node (identity_pubkey) to add to Ryan's wallet to connect and create channel
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli getinfo
 {
     "version": "0.15.3-beta commit=v0.15.3-beta",
@@ -395,20 +438,26 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
     "num_active_channels": 0,
     "num_inactive_channels": 0,
 ...
+```
 
-// Ryan connect with Bob
+### Ryan connect with Bob
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli connect 023fe826962aa3e1108a50a64c1b4fe62ec821174f8b080add2446cf480ddfdfa3@localhost:9737
 {
 
 }
+```
 
-// Ryan start channel with Bob
+### Ryan start channel with Bob
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli openchannel --node_key=023fe826962aa3e1108a50a64c1b4fe62ec821174f8b080add2446cf480ddfdfa3 --local_amt=250000
 {
 	"funding_txid": "d9fa96e7eedee54fa3ed53bb631beb826aaf743a66b2238805125591562badc8"
 }
+```
 
-// Bob checks and sees remote balance on Ryan's end
+### Bob checks and sees remote balance on Ryan's end
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
 {
     "balance": "0",
@@ -438,8 +487,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
         "msat": "249056000"
     }
 }
+```
 
-// Ryan checks and sees remote balance pending
+### Ryan checks and sees remote balance pending
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli channelbalance
 {
     "balance": "0",
@@ -469,8 +520,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
         "msat": "0"
     }
 }
+```
 
-// Ryan see balance is no longer pending
+### Ryan see balance is no longer pending
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli channelbalance
 {
     "balance": "249056",
@@ -500,8 +553,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
         "msat": "0"
     }
 }
+```
 
-// Bob see balance is no longer pending
+### Bob see balance is no longer pending
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
 {
     "balance": "0",
@@ -531,8 +586,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
         "msat": "0"
     }
 }
+```
 
-// Bob creates invoice 
+### Bob creates invoice 
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli addinvoice --amt=50000
 {
     "r_hash": "5eb3d3ab9cd01687a44ab8eb2558265a8183086a34533a6d40a769467627ccbd",
@@ -540,8 +597,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
     "add_index": "1",
     "payment_addr": "7fe39cc6020206affb0ec47b06e7be20470336f123e96fbc7fd2a3479bb0b9e4"
 }
+```
 
-// Ryan pays invoice
+### Ryan pays invoice
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli sendpayment --pay_req=lntb500u1p3hqnk3pp5t6ea82uu6qtg0fz2hr4j2kpxt2qcxzr2x3fn5m2q5a55va38ej7sdqqcqzpgxqyz5vqsp50l3ee3szqgr2l7cwc3asdea7yprsxdh3y05kl0rl62350xash8jq9qyyssqtdg2qyz7k4q2s82v4sv2y9mr89yfmerrkqfgg540mt9e7g5wm9dh0syv39l62hl43stdmq29z9v5ln807ttcjscwchspkyq3rx5zp4spfcq86f
 Payment hash: 5eb3d3ab9cd01687a44ab8eb2558265a8183086a34533a6d40a769467627ccbd
 Description: 
@@ -557,8 +616,10 @@ Confirm payment (yes/no): yes
 Amount + fee:   50000 + 0 sat
 Payment hash:   5eb3d3ab9cd01687a44ab8eb2558265a8183086a34533a6d40a769467627ccbd
 Payment status: SUCCEEDED, preimage: 5b7a80575f2cdbaafc16f112db13b3f4a8ffb0ba563317bac32e6ce3453f960b
+```
 
-// Ryan sees payment in channel balance
+### Ryan sees payment in channel balance
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli channelbalance
 {
     "balance": "199056",
@@ -588,8 +649,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
         "msat": "0"
     }
 }
+```
 
-// Bob sees payment in channel balance
+### Bob sees payment in channel balance
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
 {
     "balance": "50000",
@@ -619,8 +682,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
         "msat": "0"
     }
 }
+```
 
-// Ryan creates payment request back to Bob
+### Ryan creates payment request back to Bob
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli addinvoice --amt=20000
 {
     "r_hash": "b490dbb1fd56447dc7ccc5b32c990826dfbf9f07bf5d3e5e517d6f683abef40c",
@@ -628,8 +693,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
     "add_index": "1",
     "payment_addr": "26fb6b6bf2582cbd17afd0954be51485c163278f679b197ed513dee973d7fca7"
 }
+```
 
-// Bob pays payment request
+### Bob pays payment request
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli sendpayment --pay_req=lntb200u1p3hq5z3pp5kjgdhv0a2ez8m37vckejexggym0ml8c8hawnuhj304hksw477sxqdqqcqzpgxqyz5vqsp5ymakk6ljtqkt69a06z25heg5shqkxfu0v7d3jlk4z00wju7hljns9qyyssqr4y3qkm7zznrp757v5ejvq08r4mw4psyg54nq2mxp7wkly3w6syy7kwpq5fzcsfe0663wgewlyycnvf295lkvuvrjdhd46vmkvwpn3cp8hwxmk
 Payment hash: b490dbb1fd56447dc7ccc5b32c990826dfbf9f07bf5d3e5e517d6f683abef40c
 Description: 
@@ -645,8 +712,10 @@ Confirm payment (yes/no): yes
 Amount + fee:   20000 + 0 sat
 Payment hash:   b490dbb1fd56447dc7ccc5b32c990826dfbf9f07bf5d3e5e517d6f683abef40c
 Payment status: SUCCEEDED, preimage: f200403a57fff35b8563e718a83341218191c5fc4f58cad1961113320cff4d33
+```
 
-// Ryan sees change in balance
+### Ryan sees change in balance
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli channelbalance
 {
     "balance": "219056",
@@ -676,8 +745,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
         "msat": "0"
     }
 }
+```
 
-// Bob sees change in balance
+### Bob sees change in balance
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
 {
     "balance": "30000",
@@ -707,8 +778,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
         "msat": "0"
     }
 }
+```
 
-// Ryan closes channel
+### Ryan closes channel
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli closeallchannels
 {
 	"remote_pub_key": "023fe826962aa3e1108a50a64c1b4fe62ec821174f8b080add2446cf480ddfdfa3",
@@ -716,8 +789,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
 	"closing_txid": "19d0278a3f2e12d9789fe59eec1fc9ddae9e450316b3b0de473f79e10d0d713f",
 	"error": ""
 }
+```
 
-// Bob sees channel is closed
+### Bob sees channel is closed
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli channelbalance
 {
     "balance": "0",
@@ -747,8 +822,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
         "msat": "0"
     }
 }
+```
 
-// Bob sees that he has a net 30,000 satoshis from the transactions in the channel (received 50,000 then sent 20,000)
+### Bob sees that he has a net 30,000 satoshis from the transactions in the channel (received 50,000 then sent 20,000)
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli walletbalance
 {
     "total_balance": "30000",
@@ -763,8 +840,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ 
         }
     }
 }
+```
 
-// Ryan sees the channel balance reflects the funding amount minus the 30,000 satoshis to Bob
+### Ryan sees the channel balance reflects the funding amount minus the 30,000 satoshis to Bob
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli walletbalance
 {
     "total_balance": "269639",
@@ -779,8 +858,10 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
         }
     }
 }
+```
 
-// Ryan sees the channel is closed
+### Ryan sees the channel is closed
+```
 ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$ ./lcli channelbalance
 {
     "balance": "0",
@@ -810,9 +891,13 @@ ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/ryan$
         "msat": "0"
     }
 }
+```
 
-// Bob sends coins from lightning node back to on-chain once funds are confirmed
-ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo/bob$ ./lcli sendcoins bcrt1qmfy0laf7x6nv502glx4w97rcqrrezay3ymcv3p 10000
-TODO: FILL IN
+### Bob sends coins from lightning node back to on-chain once funds are confirmed
+```
+ryan@ryan-ThinkPad-T470p:~/ut/bitcoin/bergsy-bitcoin/code/lnd-demo-testnet/bob$ ./lcli sendcoins tb1q5lmfpmpzh6aggvud3eylr6mhmvhsppqv4x2jmd 29000
+{
+    "txid": "2e0b61ab9322e587645b5bca2ba5e1ba31f6fa96935b5a11c45ca3a41588ff18"
+}
 
 ```
